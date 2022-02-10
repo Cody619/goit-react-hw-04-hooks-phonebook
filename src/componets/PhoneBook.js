@@ -2,15 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export const PhoneBook = (props) => {
-  const {
-    filter,
-    name,
-    number,
-    handleSubmit,
-    handleNameChange,
-    handleNumberChange,
-    handleFilterChange,
-  } = props
+  const { filter, name, number, handleSubmit, handleChange } = props
 
   return (
     <div>
@@ -18,7 +10,7 @@ export const PhoneBook = (props) => {
       <form onSubmit={handleSubmit}>
         <h2>Name</h2>
         <input
-          onChange={handleNameChange}
+          onChange={(event) => handleChange('name', event)}
           value={name}
           type="text"
           name="name"
@@ -29,7 +21,7 @@ export const PhoneBook = (props) => {
         <h2>Number</h2>
         <input
           value={number}
-          onChange={handleNumberChange}
+          onChange={(event) => handleChange('number', event)}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -39,7 +31,11 @@ export const PhoneBook = (props) => {
         <button type="submit">Add contact</button>
       </form>
       <h3>Find contacts by name</h3>
-      <input type="text" value={filter} onChange={handleFilterChange} />
+      <input
+        type="text"
+        value={filter}
+        onChange={(event) => handleChange('filter', event)}
+      />
     </div>
   )
 }
@@ -48,7 +44,5 @@ PhoneBook.propTypes = {
   name: PropTypes.string.isRequired,
   number: PropTypes.number.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleNameChange: PropTypes.func.isRequired,
-  handleNumberChange: PropTypes.func.isRequired,
-  handleFilterChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
 }

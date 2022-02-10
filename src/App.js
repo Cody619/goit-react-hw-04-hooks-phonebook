@@ -28,32 +28,33 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    setContacts((contacts) => {
-      if (contacts.some((contact) => contact.name === name)) {
-        alert(`${name} is already in contacts`)
-        return contacts
-      } else {
-        setName('')
-        setNumber('')
-        return [...contacts, { name, id: uuidv4(), number }]
-      }
-    })
+    if (contacts.some((contact) => contact.name === name)) {
+      alert(`${name} is already in contacts`)
+    } else {
+      setName('')
+      setNumber('')
+      setContacts([...contacts, { name, id: uuidv4(), number }])
+    }
   }
 
   const handleDeleteItem = (id) => {
     setContacts((contacts) => contacts.filter((contact) => contact.id !== id))
   }
 
-  const handleNameChange = (event) => {
-    setName(event.currentTarget.value)
-  }
-
-  const handleNumberChange = (event) => {
-    setNumber(event.currentTarget.value)
-  }
-
-  const handleFilterChange = (event) => {
-    setFilter(event.currentTarget.value)
+  const handlChange = (name, event) => {
+    switch (name) {
+      case 'name':
+        setName(event.currentTarget.value)
+        break
+      case 'number':
+        setNumber(event.currentTarget.value)
+        break
+      case 'filter':
+        setFilter(event.currentTarget.value)
+        break
+      default:
+        break
+    }
   }
 
   const filterContacts = () => {
@@ -73,9 +74,7 @@ const App = () => {
         name={name}
         number={number}
         handleSubmit={handleSubmit}
-        handleNameChange={handleNameChange}
-        handleNumberChange={handleNumberChange}
-        handleFilterChange={handleFilterChange}
+        handleChange={handlChange}
       />
       <Contacts
         contacts={filterContacts()}
